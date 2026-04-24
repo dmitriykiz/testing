@@ -32,7 +32,8 @@ prefixes:
   - name: "cert-manager-infra-images images"
     prefix: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/"
     repo: "https://github.com/cert-manager/testing"
-    summarise: false
+    # summarise: true groups all bumps from this repo into a single PR entry
+    summarise: true
     consistentImages: false
   - name: "quay.io/jetstack/base-static image"
     prefix: "quay.io/jetstack/base-static"
