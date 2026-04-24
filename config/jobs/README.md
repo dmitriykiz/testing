@@ -36,6 +36,7 @@ Periodic jobs run on a schedule. They are defined in `*-periodics.yaml` files.
 2. Create or modify the appropriate YAML file.
 3. Follow the existing job format and conventions.
 4. Run `make verify` to validate your configuration.
+5. Run `make generate` if you added any new job templates that require generated output.
 
 ## Autobumping
 
@@ -50,3 +51,6 @@ image is pushed to the registry.
 
 All job configurations are validated using the Prow job configuration validator.
 Run `make verify` to validate all configurations locally before submitting a PR.
+
+> **Note (personal fork):** I use `make verify` and `make generate` together as
+> a habit before pushing any changes. Keeping this note here as a reminder.
