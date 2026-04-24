@@ -26,6 +26,11 @@ verify-prowgen:
 	cd ./config/prowgen/ && go run . --branch=* -o $(CURDIR)/_temp/cert-manager/
 	diff -q -r $(CURDIR)/config/jobs/cert-manager/cert-manager/ $(CURDIR)/_temp/cert-manager/
 
+# Clean up the temporary directory created during verify-prowgen
+.PHONY: clean
+clean:
+	rm -rf _temp
+
 .PHONY: verify
 verify: verify-boilerplate verify-prowgen
 
