@@ -10,7 +10,7 @@ plank:
   default_decoration_configs:
     '*':
       timeout: 7200000000000 # 2h
-      grace_period: 15000000000 # 15s (increased from 10s to give sidecars a bit more time to flush logs)
+      grace_period: 30000000000 # 30s (increased from 15s to give sidecars more time to flush logs on slow nodes)
       utility_images:
         clonerefs: "us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20260414-6691f5aff"
         initupload: "us-docker.pkg.dev/k8s-infra-prow/images/initupload:v20260414-6691f5aff"
@@ -43,6 +43,4 @@ branch-protection:
       protect: true
       # Prevent administrators from accidentally pushing directly to protected branches.
       # Causes the "Include Administrators" checkbox to be ticked in the GitHub branch protection UI.
-      # See https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#do-not-allow-bypassing-the-above-settings
-      enforce_admins: true
-      # Disal
+      # See https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#do-not-allow-b
