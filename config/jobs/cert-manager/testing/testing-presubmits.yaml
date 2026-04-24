@@ -1,0 +1,86 @@
+# Presubmit jobs for the cert-manager/testing repository.
+# These jobs run on pull requests to validate changes before merging.
+presubmits:
+  cert-manager/testing:
+    - name: pull-testing-verify-boilerplate
+      always_run: true
+      decorate: true
+      spec:
+        containers:
+          - image: gcr.io/k8s-prow/boilerplate:latest
+            command:
+              - /app/boilerplate/boilerplate.py
+            args:
+              - --boilerplate-dir=hack/boilerplate
+              - --source-dir=.
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      annotations:
+        testgrid-dashboards: cert-manager-testing-presubmits
+        testgrid-tab-name: verify-boilerplate
+        description: Verifies source file boilerplate headers
+
+    - name: pull-testing-verify-config
+      always_run: true
+      decorate: true
+      spec:
+        containers:
+          - image: gcr.io/k8s-prow/checkconfig:latest
+            command:
+              - /checkconfig
+            args:
+              - --config-path=config/config.yaml
+              - --job-config-path=config/jobs
+              - --strict
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+      annotations:
+        testgrid-dashboards: cert-manager-testing-presubmits
+        testgrid-tab-name: verify-config
+        description: Validates Prow configuration files
+
+    - name: pull-testing-verify-jobs
+      always_run: true
+      decorate: true
+      spec:
+        containers:
+          - image: gcr.io/k8s-prow/job-forker:latest
+            command:
+              - /job-forker
+            args:
+              - --config-path=config/config.yaml
+              - --job-config-path=config/jobs
+              - --dry-run=true
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      annotations:
+        testgrid-dashboards: cert-manager-testing-presubmits
+        testgrid-tab-name: verify-jobs
+        description: Validates job configurations are consistent
+
+    - name: pull-testing-verify-autobump-config
+      always_run: true
+      decorate: true
+      run_if_changed: 'config/autobump-config/.*\.yaml$'
+      spec:
+        containers:
+          - image: gcr.io/k8s-prow/autobump:latest
+            command:
+              - /autobump
+            args:
+              - --config=config/autobump-config/testing-autobump-config.yaml
+              - --dry-run=true
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      annotations:
+        testgrid-dashboards: cert-manager-testing-presubmits
+        testgrid-tab-name: verify-autobump-config
+        description: Validates autobump configuration
