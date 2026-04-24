@@ -9,8 +9,8 @@ clusters:
 
 - gke: projects/cert-manager-tests-untrusted/locations/europe-west1-b/clusters/prow-untrusted
   name: default
-  # Increased duration to 48h for more frequent rotation in untrusted cluster
-  duration: 48h
+  # Reduced duration to 24h for more frequent rotation in untrusted cluster
+  duration: 24h
   kubernetesSecret:
     name: kubeconfig-prow-untrusted
     namespace: default
