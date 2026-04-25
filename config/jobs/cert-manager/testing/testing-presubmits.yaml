@@ -13,10 +13,10 @@ presubmits:
             args:
               - --boilerplate-dir=hack/boilerplate
               - --source-dir=.
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
       annotations:
         testgrid-dashboards: cert-manager-testing-presubmits
         testgrid-tab-name: verify-boilerplate
@@ -34,10 +34,10 @@ presubmits:
               - --config-path=config/config.yaml
               - --job-config-path=config/jobs
               - --strict
-        resources:
-          requests:
-            cpu: 200m
-            memory: 256Mi
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
       annotations:
         testgrid-dashboards: cert-manager-testing-presubmits
         testgrid-tab-name: verify-config
@@ -55,10 +55,10 @@ presubmits:
               - --config-path=config/config.yaml
               - --job-config-path=config/jobs
               - --dry-run=true
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
       annotations:
         testgrid-dashboards: cert-manager-testing-presubmits
         testgrid-tab-name: verify-jobs
@@ -76,10 +76,10 @@ presubmits:
             args:
               - --config=config/autobump-config/testing-autobump-config.yaml
               - --dry-run=true
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
       annotations:
         testgrid-dashboards: cert-manager-testing-presubmits
         testgrid-tab-name: verify-autobump-config
