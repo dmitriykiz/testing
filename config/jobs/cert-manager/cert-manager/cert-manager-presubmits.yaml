@@ -1,0 +1,98 @@
+# Presubmit jobs for the cert-manager/cert-manager repository.
+# These jobs run on pull requests to validate changes before merging.
+presubmits:
+  cert-manager/cert-manager:
+    - name: pull-cert-manager-verify
+      decorate: true
+      always_run: true
+      skip_report: false
+      labels:
+        preset-service-account: "true"
+        preset-dind-enabled: "true"
+      spec:
+        containers:
+          - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang:1.21
+            command:
+              - make
+              - verify
+            resources:
+              requests:
+                cpu: 2
+                memory: 4Gi
+            securityContext:
+              privileged: true
+      annotations:
+        testgrid-dashboards: cert-manager-presubmits
+        testgrid-tab-name: verify
+        description: Runs verification checks (linting, formatting, codegen) on cert-manager PRs
+
+    - name: pull-cert-manager-unit
+      decorate: true
+      always_run: true
+      skip_report: false
+      labels:
+        preset-service-account: "true"
+      spec:
+        containers:
+          - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang:1.21
+            command:
+              - make
+              - test
+            resources:
+              requests:
+                cpu: 4
+                memory: 8Gi
+      annotations:
+        testgrid-dashboards: cert-manager-presubmits
+        testgrid-tab-name: unit-tests
+        description: Runs unit tests for cert-manager
+
+    - name: pull-cert-manager-e2e
+      decorate: true
+      always_run: false
+      run_if_changed: "(pkg|cmd|internal|test/e2e)/.*\.go$"
+      skip_report: false
+      labels:
+        preset-service-account: "true"
+        preset-dind-enabled: "true"
+        preset-kind-volume-mounts: "true"
+      spec:
+        containers:
+          - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang:1.21
+            command:
+              - make
+              - e2e
+            resources:
+              requests:
+                cpu: 4
+                memory: 16Gi
+            securityContext:
+              privileged: true
+      annotations:
+        testgrid-dashboards: cert-manager-presubmits
+        testgrid-tab-name: e2e-tests
+        description: Runs end-to-end tests for cert-manager using kind
+
+    - name: pull-cert-manager-build
+      decorate: true
+      always_run: true
+      skip_report: false
+      labels:
+        preset-service-account: "true"
+        preset-dind-enabled: "true"
+      spec:
+        containers:
+          - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang:1.21
+            command:
+              - make
+              - build
+            resources:
+              requests:
+                cpu: 4
+                memory: 8Gi
+            securityContext:
+              privileged: true
+      annotations:
+        testgrid-dashboards: cert-manager-presubmits
+        testgrid-tab-name: build
+        description: Builds all cert-manager binaries and container images
