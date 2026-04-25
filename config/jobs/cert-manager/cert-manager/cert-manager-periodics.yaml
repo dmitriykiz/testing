@@ -63,7 +63,8 @@ periodics:
           memory: 12Gi
 
 - name: periodic-cert-manager-release-next-e2e-v1-28
-  interval: 12h
+  # NOTE: Increased interval to 24h to reduce resource usage in my personal fork
+  interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -78,7 +79,7 @@ periodics:
     testgrid-dashboards: cert-manager-periodic
     testgrid-tab-name: release-next-e2e-v1-28
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs e2e tests against the latest cert-manager main branch on Kubernetes v1.28 every 12 hours
+    description: Runs e2e tests against the latest cert-manager main branch on Kubernetes v1.28 every 24 hours
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20231010-9df2e5e-1.21
