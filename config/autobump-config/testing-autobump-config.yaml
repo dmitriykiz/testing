@@ -34,6 +34,7 @@ prefixes:
     repo: "https://github.com/cert-manager/testing"
     # summarise: true groups all bumps from this repo into a single PR entry
     summarise: true
+    # consistentImages: true would enforce all images use the same tag; leaving false for flexibility
     consistentImages: false
   - name: "quay.io/jetstack/base-static image"
     prefix: "quay.io/jetstack/base-static"
