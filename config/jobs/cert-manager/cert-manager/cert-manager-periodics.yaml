@@ -2,7 +2,8 @@ periodics:
 # Periodic jobs for cert-manager/cert-manager
 
 - name: periodic-cert-manager-release-next-unit-test
-  interval: 6h
+  # NOTE: Reduced interval to 12h in personal fork to balance freshness and resource usage
+  interval: 12h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -17,7 +18,7 @@ periodics:
     testgrid-dashboards: cert-manager-periodic
     testgrid-tab-name: release-next-unit-test
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs unit tests against the latest cert-manager main branch every 6 hours
+    description: Runs unit tests against the latest cert-manager main branch every 12 hours
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20231010-9df2e5e-1.21
