@@ -40,6 +40,7 @@ test:
 
 # Run checkconfig locally to verify the Prow configuration, CI runs this
 # directly in the Prow cluster.
+# Note: use 'make local-checkconfig' before pushing changes to catch config errors early.
 local-checkconfig:
 	docker run --rm \
 		-v $(CURDIR)/config:/config \
