@@ -50,7 +50,8 @@ presubmits:
     - name: pull-cert-manager-e2e
       decorate: true
       always_run: false
-      run_if_changed: "(pkg|cmd|internal|test/e2e)/.*\.go$"
+      # Also trigger e2e on changes to helm/kustomize config files
+      run_if_changed: "(pkg|cmd|internal|test/e2e)/.*\.go$|deploy/.*\.(yaml|json)$"
       skip_report: false
       labels:
         preset-service-account: "true"
@@ -95,4 +96,4 @@ presubmits:
       annotations:
         testgrid-dashboards: cert-manager-presubmits
         testgrid-tab-name: build
-        description: Builds all cert-manager binaries and container images
+        description: Builds cert-manager binaries and Docker images
