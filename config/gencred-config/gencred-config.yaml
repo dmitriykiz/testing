@@ -10,8 +10,9 @@ clusters:
 - gke: projects/cert-manager-tests-untrusted/locations/europe-west1-b/clusters/prow-untrusted
   name: default
   # Reduced duration to 12h for tighter security on untrusted workloads
-  # NOTE: bumping to 24h locally since 12h causes frequent rotation issues in my setup
-  duration: 24h
+  # NOTE: bumping to 48h locally since 12h causes frequent rotation issues in my setup
+  # and 24h still rotates too often when running offline/intermittent connectivity
+  duration: 48h
   kubernetesSecret:
     name: kubeconfig-prow-untrusted
     namespace: default
